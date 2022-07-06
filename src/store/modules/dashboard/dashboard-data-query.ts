@@ -195,10 +195,16 @@ const actions: ActionTree<State, any> = {
           if (config.entityType === 'Endpoint' && !currentEndpointId) {
             return null;
           }
-          let destNormalVal = undefined;
-          let destServiceNameVal = undefined;
-          let destServiceInstanceNameVal = undefined;
-          let destEndpointNameVal = undefined;
+          let normalVal;
+          if (serviceName === 'User') {
+            normalVal = false;
+          } else {
+            normalVal = normal;
+          }
+          let destNormalVal;
+          let destServiceNameVal;
+          let destServiceInstanceNameVal;
+          let destEndpointNameVal;
           if (isRelation) {
             destServiceNameVal = destService.label;
             const currentNodes = context.rootState.rocketTopo.nodes;
@@ -221,7 +227,7 @@ const actions: ActionTree<State, any> = {
                 serviceName,
                 serviceInstanceName: config.entityType.includes('ServiceInstance') ? currentInstanceId : undefined,
                 endpointName: config.entityType.includes('Endpoint') ? currentEndpointId : undefined,
-                normal,
+                normal: normalVal,
                 destNormal: destNormalVal,
                 destServiceName: destServiceNameVal,
                 destServiceInstanceName: destServiceInstanceNameVal,
