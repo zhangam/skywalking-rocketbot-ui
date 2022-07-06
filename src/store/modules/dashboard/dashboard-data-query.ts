@@ -195,21 +195,22 @@ const actions: ActionTree<State, any> = {
           if (config.entityType === 'Endpoint' && !currentEndpointId) {
             return null;
           }
-          let destNormal = undefined;
-          let destServiceName = undefined;
-          let destServiceInstanceName = undefined;
-          let destEndpointName = undefined;
+          let destNormalVal = undefined;
+          let destServiceNameVal = undefined;
+          let destServiceInstanceNameVal = undefined;
+          let destEndpointNameVal = undefined;
           if (isRelation) {
-            destServiceName = destService.label;
+            destServiceNameVal = destService.label;
             const currentNodes = context.rootState.rocketTopo.nodes;
             const destNodes = currentNodes.filter((item: { name: string }) => item.name == destService.label);
             if (destNodes.length === 1) {
-              destNormal = destNodes[0].isReal;
+              destNormalVal = destNodes[0].isReal;
             } else {
-              destNormal = normal;
+              destNormalVal = normal;
             }
-            destServiceInstanceName = config.entityType === 'ServiceInstanceRelation' ? destInstance.label : undefined;
-            destEndpointName = config.entityType === 'EndpointRelation' ? destEndpoint.label : undefined;
+            destServiceInstanceNameVal =
+              config.entityType === 'ServiceInstanceRelation' ? destInstance.label : undefined;
+            destEndpointNameVal = config.entityType === 'EndpointRelation' ? destEndpoint.label : undefined;
           }
           variables = {
             duration: params.duration,
@@ -221,10 +222,10 @@ const actions: ActionTree<State, any> = {
                 serviceInstanceName: config.entityType.includes('ServiceInstance') ? currentInstanceId : undefined,
                 endpointName: config.entityType.includes('Endpoint') ? currentEndpointId : undefined,
                 normal,
-                destNormal: destNormal,
-                destServiceName: destServiceName,
-                destServiceInstanceName: destServiceInstanceName,
-                destEndpointName: destEndpointName,
+                destNormal: destNormalVal,
+                destServiceName: destServiceNameVal,
+                destServiceInstanceName: destServiceInstanceNameVal,
+                destEndpointName: destEndpointNameVal,
               },
             },
             labels,
