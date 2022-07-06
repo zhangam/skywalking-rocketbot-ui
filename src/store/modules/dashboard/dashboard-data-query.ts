@@ -202,7 +202,7 @@ const actions: ActionTree<State, any> = {
           if (isRelation) {
             destServiceNameVal = destService.label;
             const currentNodes = context.rootState.rocketTopo.nodes;
-            const destNodes = currentNodes.filter((item: { name: string }) => item.name == destService.label);
+            const destNodes = currentNodes.filter((item: { name: string }) => item.name === destService.label);
             if (destNodes.length === 1) {
               destNormalVal = destNodes[0].isReal;
             } else {
